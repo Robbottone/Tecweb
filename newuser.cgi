@@ -89,8 +89,7 @@ my struser="<user birth_date='$birthdate'>
 		</kind>
 	</user>";
 }
-else{
-if($type eq "1"){
+elsif($type eq "1") {
 my struser="<user birth_date='$birthdate'>
 		<username>$username</username>
 		<password>$password</password>
@@ -100,9 +99,9 @@ my struser="<user birth_date='$birthdate'>
 			<writer></writer>
 			<reader>1</reader>
 		</kind>
-	</user>";}
-else {
-if($type eq "1"){
+	</user>";
+}
+elsif($type eq "2"){
 my struser="<user birth_date='$birthdate'>
 		<username>$username</username>
 		<password>$password</password>
@@ -113,7 +112,14 @@ my struser="<user birth_date='$birthdate'>
 			<reader>1</reader>
 		</kind>
 	</user>";}
-	}
 }
+my $novopost=$xml->parse_balanced_chunk($struser,'UTF-8');
+$father->appendchild($novopost);
+
+open(OUT,">$userDB");
+print OUT $source->toString;
+close(OUT);
+
+#ridirezionale l'utente
 
 
