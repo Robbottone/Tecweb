@@ -14,6 +14,10 @@ use Email::Valid;
 my $cgi=CGI->new();
 my $xml = XML::LibXML->new();
 my $xslt = XML::LibXSLT->new();
+my UserDB="/XML/users.xml";
+my $source = XML::LibXML->load_xml(location => $UserDB);
+
+
 my $msg = "&&";
 my $fail = 0;
 
@@ -65,3 +69,51 @@ if((!define $cgi->param('mail')) && $cgi->param('mail') eq "" )
 else {$birthdate=$cgi->param('mail');}
 
 $type=$cgi->param('type');
+
+# completare la parte del fail
+
+#vado a gestire la parte XML
+my $ptusers=$source->findnodes("/users/user");
+my $father=$ptusers->get_node(1)->parentNode; #sono all'interno dell'albero, prendo il primo elemento user, e mi posiziono prima (alla radice)
+
+#costruisco il template xml
+if($type eq "") {
+my struser="<user birth_date='$birthdate'>
+		<username>$username</username>
+		<password>$password</password>
+		<e-mail>$mail</e-mail>
+		<kind>
+			<illustrator></illustrator>
+			<writer></writer>
+			<reader>1</reader>
+		</kind>
+	</user>";
+}
+else{
+if($type eq "1"){
+my struser="<user birth_date='$birthdate'>
+		<username>$username</username>
+		<password>$password</password>
+		<e-mail>$mail</e-mail>
+		<kind>
+			<illustrator>1</illustrator>
+			<writer></writer>
+			<reader>1</reader>
+		</kind>
+	</user>";}
+else {
+if($type eq "1"){
+my struser="<user birth_date='$birthdate'>
+		<username>$username</username>
+		<password>$password</password>
+		<e-mail>$mail</e-mail>
+		<kind>
+			<illustrator></illustrator>
+			<writer>1</writer>
+			<reader>1</reader>
+		</kind>
+	</user>";}
+	}
+}
+
+
