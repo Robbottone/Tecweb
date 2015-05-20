@@ -71,6 +71,9 @@ else {$birthdate=$cgi->param('mail');}
 $type=$cgi->param('type');
 
 # completare la parte del fail
+if($fail) {
+	CFUN::redir(/provains.cgi?$msg);
+	}
 
 #vado a gestire la parte XML
 my $ptusers=$source->findnodes("/users/user");
